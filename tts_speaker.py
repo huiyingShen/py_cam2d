@@ -22,26 +22,29 @@ class TtsSpeaker:
         self.stopped = False
         self.media_player.set_media(self.media)
         self.media_player.play()
-        for n in range(1000):
+        for n in range(1_000_000):
             if self.stopped: 
                 self.media_player.stop()
                 break
             sleep(0.01)
             pos = self.media_player.get_position()
-            print(pos)
-            if pos > 0.5 and not self.media_player.is_playing(): 
+            if pos > 0.1 and not self.media_player.is_playing(): 
+                print(n,pos)
                 break
 
     def play_text(self,txt):
         self.set_media(txt)
-        self.playUntilDone()
-        # threading.Thread(target=self.playUntilDone()).start()
+        threading.Thread(target=self.playUntilDone()).start()
 
-    def stop(self):
+    def stop(self,dt = 1):
+        print("stop()")
+        sleep(dt)
         self.stopped = True
 
     def test1(self):
         self.play_text("testing, 1, 2, 3, ...")
+        threading.Thread(target=self.stop()).start()
+
 
 def text_to_media(txt = "hello, world!"):
     filename = txt + ".mp3"
@@ -76,6 +79,6 @@ if __name__ == '__main__':
     TtsSpeaker().test1()
     # media_player = unblock_play("how are you doing today?",None)
     # unblock_play("I am fine thank you",media_player)
-    unblock_play("Am I the last one?",None)
+    # unblock_play("Am I the last one?",None)
  
     
