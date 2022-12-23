@@ -37,13 +37,14 @@ class TtsSpeaker:
         threading.Thread(target=self.playUntilDone()).start()
 
     def stop(self,dt = 1):
-        print("stop()")
-        sleep(dt)
-        self.stopped = True
+        self.media_player.stop()
 
     def test1(self):
-        self.play_text("testing, 1, 2, 3, ...")
-        threading.Thread(target=self.stop()).start()
+        self.set_media("testing, 1, 2, 3, ...")
+        threading.Thread(target=self.playUntilDone()).start()
+        print('here')
+        sleep(0.1)
+        self.media_player.stop()
 
 
 def text_to_media(txt = "hello, world!"):
