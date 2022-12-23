@@ -3,8 +3,8 @@ import cv2
 # from numba import jit
 
 from market_data import getMarketData
-import pyttsx3
-engine = pyttsx3.init()
+# import pyttsx3
+# engine = pyttsx3.init()
 
 # @jit
 def dist2(p1,p2):
@@ -40,7 +40,7 @@ def getDist2(p,vPnt):
         dy = (p2[1] - p1[1])*proj
         vProj.append((p1[0]+dx,p1[1]+dy))
 
-    d2Min = 9999999999.0
+    d2Min = 999999.0
     # print("1: len(vProj) = {}".format(len(vProj)))
     vProj.extend(vPnt)
     # print("2: len(vProj) = {}".format(len(vProj)))
@@ -101,7 +101,7 @@ class Cam2D:
 
     def findClosestStreet(self,p):
         # print("p = ",p)
-        d2Min = 9999999999.0
+        d2Min = 999999.0
         stMin = ""
         for st in self.streets:
             d2 = getDist2(p,st[1])
@@ -156,24 +156,5 @@ class Cam2D:
 
         cv2.waitKey(0)
 
-
-    def test2(self):
-        p =  (102.443601126121, 373.35692389820997)
-        cv2.circle(self.true_img,(int(p[0]),int(p[1])),3,(0,255,0),3)
-        img = self.drawStreet('HYS')
-        d = self.getDistance(p,'HYS')
-        print("HYS, d = {}".format(d))
-        d = self.getDistance(p,'GRV')
-        print("GRV, d = {}".format(d))
-        # img = self.drawStreet('GRV')
-        cv2.imshow("frm",img)
-        cv2.waitKey(0)
-
-
 if __name__ == '__main__':
-    # test3()
-    # d = {}
-    # d['1'] = "jnk 1"    
-    # d['2'] = "jnk 2"
-    # print(d['3'])
     Cam2D().test1()
